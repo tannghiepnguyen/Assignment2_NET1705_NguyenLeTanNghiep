@@ -36,17 +36,24 @@ namespace SaleManagementWinApp
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Order order = new Order()
+            if (dtpShippedDate.Value.CompareTo(DateTime.Now) < 0)
             {
-                OrderId = int.Parse(txtOrderID.Text),
-                CustomerId = int.Parse(txtCustomerID.Text),
-                OrderDate = dtpOrderDate.Value,
-                ShippedDate = dtpShippedDate.Value,
-                Total = decimal.Parse(txtTotal.Text),
-                OrderStatus = cbOrderStatus.Checked ? "1" : "0",
-            };
-            orderRepository.UpdateOrder(order);
-            this.Close();
+                MessageBox.Show("Shipped date is invalid", "Invalid input", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                Order order = new Order()
+                {
+                    OrderId = int.Parse(txtOrderID.Text),
+                    CustomerId = int.Parse(txtCustomerID.Text),
+                    OrderDate = dtpOrderDate.Value,
+                    ShippedDate = dtpShippedDate.Value,
+                    Total = decimal.Parse(txtTotal.Text),
+                    OrderStatus = cbOrderStatus.Checked ? "1" : "0",
+                };
+                orderRepository.UpdateOrder(order);
+                this.Close();
+            }
         }
     }
 }
