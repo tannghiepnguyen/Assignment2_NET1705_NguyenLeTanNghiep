@@ -25,7 +25,7 @@ namespace SaleManagementWinApp
             InitializeComponent();
         }
 
-        private void frmCheckout_Load(object sender, EventArgs e)
+        private void LoadCheckoutList()
         {
             dgvProductListCheckOut.DataSource = orderItems.Select(c => new
             {
@@ -37,12 +37,9 @@ namespace SaleManagementWinApp
             }).ToList();
         }
 
-        private void dgvProductList_CellEnter(object sender, DataGridViewCellEventArgs e)
+        private void frmCheckout_Load(object sender, EventArgs e)
         {
-            if (dgvProductListCheckOut.CurrentCell.ColumnIndex == 3)
-            {
-                dgvProductListCheckOut.BeginEdit(true);
-            }
+            LoadCheckoutList();
         }
 
         private void btnClose_Click(object sender, EventArgs e) => this.Close();
@@ -77,6 +74,39 @@ namespace SaleManagementWinApp
             orderDetailRepository.InsertOrderDetail(orderedItems);
             MessageBox.Show("Order successfully", "Order Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
+        }
+
+        private void btnChangeAmount_Click(object sender, EventArgs e)
+        {
+            int rowIndex = dgvProductListCheckOut.CurrentRow.Index;
+            if (numericAmount.Value < 0)
+            {
+                MessageBox.Show("Amount number is invalid", "Invalid input", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+            }
+            else if (numericAmount.Value == 0)
+            {
+                orderItems.RemoveAt(rowIndex);
+            }
+            else
+            {
+                orderItems[rowIndex].Quantity = (int)numericAmount.Value;
+            }
+            LoadCheckoutList();
+        }
+
+        private void dgvProductListCheckOut_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = dgvProductListCheckOut.CurrentCell.ColumnIndex;
+            if (index == 3)
+            {
+                numericAmount.Enabled = true;
+                btnChangeAmount.Enabled = true;
+            }
+            else
+            {
+                numericAmount.Enabled = false;
+                btnChangeAmount.Enabled = false;
+            }
         }
     }
 }
