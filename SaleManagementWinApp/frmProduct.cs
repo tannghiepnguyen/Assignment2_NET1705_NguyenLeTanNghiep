@@ -25,7 +25,7 @@ namespace SaleManagementWinApp
         {
             productRepository = new ProductRepository();
             categoryRepository = new CategoryRepository();
-            supplierRepository = new SupplierCategory();
+            supplierRepository = new SupplierRepository();
             InitializeComponent();
         }
 

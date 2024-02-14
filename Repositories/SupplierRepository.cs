@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public class SupplierCategory : ISupplierRepository
+    public class SupplierRepository : ISupplierRepository
     {
         public List<Supplier> GetAllSupplier() => SupplierDAO.Instance.GetAllSupplier();
     }
