@@ -73,6 +73,7 @@
             // 
             // numericAmount
             // 
+            numericAmount.Enabled = false;
             numericAmount.Location = new Point(96, 316);
             numericAmount.Name = "numericAmount";
             numericAmount.Size = new Size(143, 27);
@@ -89,6 +90,7 @@
             // 
             // btnChangeAmount
             // 
+            btnChangeAmount.Enabled = false;
             btnChangeAmount.Location = new Point(245, 314);
             btnChangeAmount.Name = "btnChangeAmount";
             btnChangeAmount.Size = new Size(94, 29);

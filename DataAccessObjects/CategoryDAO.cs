@@ -46,5 +46,20 @@ namespace DataAccessObjects
             }
             
         }
+
+        public string GetCategoryNameById(int id)
+        {
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context context = new FUFlowerBouquetManagementV4Context())
+				{
+					return context.Categories.Find(id).CategoryName;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
     }
 }

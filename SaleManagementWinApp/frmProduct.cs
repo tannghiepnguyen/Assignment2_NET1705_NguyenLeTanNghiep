@@ -35,18 +35,18 @@ namespace SaleManagementWinApp
         {
             cbCategoryID.DataSource = categoryRepository.GetAllCategories().ToList();
             cbCategoryID.ValueMember = "CategoryID";
-            cbCategoryID.DisplayMember = "CategoryID";
+            cbCategoryID.DisplayMember = "CategoryName";
             cbSupplierID.DataSource = supplierRepository.GetAllSupplier().ToList();
             cbSupplierID.ValueMember = "SupplierID";
-            cbSupplierID.DisplayMember = "SupplierID";
+            cbSupplierID.DisplayMember = "SupplierName";
 
             txtProductID.Text = generatedID.ToString();
             if (Product != null)
             {
                 txtProductID.Text = Product.FlowerBouquetId.ToString();
-                cbCategoryID.Text = Product.CategoryId.ToString();
+                cbCategoryID.Text = categoryRepository.GetNameById(Product.CategoryId);
                 txtName.Text = Product.FlowerBouquetName.ToString();
-                cbSupplierID.Text = Product.SupplierId.ToString();
+                cbSupplierID.Text = supplierRepository.GetNameById(Product.SupplierId);
                 txtUnitPrice.Text = Product.UnitPrice.ToString();
                 numUnitInStock.Value = Product.UnitsInStock;
                 cbIsActive.Checked = Product.FlowerBouquetStatus == 1; 
@@ -78,13 +78,13 @@ namespace SaleManagementWinApp
                 FlowerBouquet product = new FlowerBouquet()
                 {
                     FlowerBouquetId = int.Parse(txtProductID.Text),
-                    CategoryId = int.Parse(cbCategoryID.Text),
+                    CategoryId = int.Parse(cbCategoryID.SelectedValue.ToString()),
                     FlowerBouquetName = txtName.Text,
                     Description = txtDescription.Text,
                     UnitPrice = decimal.Parse(txtUnitPrice.Text),
                     UnitsInStock = (int)numUnitInStock.Value,
                     FlowerBouquetStatus = cbIsActive.Checked ? (byte?)1 : (byte?)0,
-                    SupplierId = int.Parse(cbSupplierID.Text),
+                    SupplierId = int.Parse(cbSupplierID.SelectedValue.ToString()),
                     Morphology = (string?)txtMorphology.Text,
                 };
                 if (isAdd)

@@ -10,5 +10,6 @@ namespace Repositories
     public interface ISupplierRepository
     {
         List<Supplier> GetAllSupplier();
+        string GetNameById(int? id);
     }
 }

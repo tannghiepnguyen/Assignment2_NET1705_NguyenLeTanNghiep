@@ -45,5 +45,20 @@ namespace DataAccessObjects
                 throw new Exception(ex.Message);
             }
         }
+
+        public string GetSupplierNameById(int? supplierId)
+        {
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context context = new FUFlowerBouquetManagementV4Context())
+				{
+                    return context.Suppliers.FirstOrDefault(x => x.SupplierId == supplierId).SupplierName;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
     }
 }
