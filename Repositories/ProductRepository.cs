@@ -16,6 +16,10 @@ namespace Repositories
 
         public List<FlowerBouquet> GetAllProduct() => ProductDAO.Instance.GetAllProduct();
 
-        public void UpdateProduct(FlowerBouquet product) => ProductDAO.Instance.UpdateProduct(product);
+		public int GetIdByName(string name) => ProductDAO.Instance.GetIdByName(name);
+
+		public string GetNameById(int id) => ProductDAO.Instance.GetNameById(id);
+
+		public void UpdateProduct(FlowerBouquet product) => ProductDAO.Instance.UpdateProduct(product);
     }
 }

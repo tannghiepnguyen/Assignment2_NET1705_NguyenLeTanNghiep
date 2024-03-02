@@ -126,5 +126,35 @@ namespace DataAccessObjects
                 throw new Exception(ex.Message);
             }
         }
-    }
+
+        public string GetNameById(int id)
+        {
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
+				{
+                    return context.Customers.Find(id).CustomerName;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+
+		public int GetIdByName(string name)
+		{
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
+				{
+                    return context.Customers.FirstOrDefault(x => x.CustomerName.Equals(name)).CustomerId;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+	}
 }

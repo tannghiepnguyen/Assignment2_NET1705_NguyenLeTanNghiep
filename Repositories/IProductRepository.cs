@@ -13,5 +13,7 @@ namespace Repositories
         void AddProduct(FlowerBouquet product);
         void UpdateProduct(FlowerBouquet product);
         void DeleteProduct(FlowerBouquet product);
+        public string GetNameById(int id);
+        public int GetIdByName(string name);
     }
 }

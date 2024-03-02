@@ -16,12 +16,14 @@ namespace SaleManagementWinApp
     {
         private IOrderRepository orderRepository;
         private IOrderDetailRepository orderDetailRepository;
+        private ICustomerRepository customerRepository;
         public Customer? Customer { get; set; }
         public bool isAdmin { get; set; }
         public frmOrderList()
         {
             orderRepository = new OrderRepository();
             orderDetailRepository = new OrderDetailRepository();
+            customerRepository = new CustomerRepository();
             InitializeComponent();
         }
 
@@ -32,7 +34,7 @@ namespace SaleManagementWinApp
                 dgvOrder.DataSource = orderRepository.GetAllOrders().Where(c => c.CustomerId == Customer.CustomerId).Select(c => new
                 {
                     c.OrderId,
-                    c.CustomerId,
+                    c.Customer.CustomerName,
                     c.OrderDate,
                     c.ShippedDate,
                     c.Total,
@@ -44,8 +46,8 @@ namespace SaleManagementWinApp
                 dgvOrder.DataSource = orderRepository.GetAllOrders().Select(c => new
                 {
                     c.OrderId,
-                    c.CustomerId,
-                    c.OrderDate,
+					c.Customer.CustomerName,
+					c.OrderDate,
                     c.ShippedDate,
                     c.Total,
                     c.OrderStatus
@@ -74,7 +76,7 @@ namespace SaleManagementWinApp
             dgvOrderDetail.DataSource = orderDetailRepository.GetOrderDetailByOrderID(orderID).Select(c => new
             {
                 c.OrderId,
-                c.FlowerBouquetId,
+                c.FlowerBouquet.FlowerBouquetName,
                 c.UnitPrice,
                 c.Quantity,
                 c.Discount
@@ -94,8 +96,8 @@ namespace SaleManagementWinApp
                 dgvOrder.DataSource = orderRepository.GetAllOrders().Where(c => DateTime.Compare(c.OrderDate, start) >= 0 && DateTime.Compare(c.OrderDate, end) <= 0).OrderByDescending(c => c.Total).Select(c => new
                 {
                     c.OrderId,
-                    c.CustomerId,
-                    c.OrderDate,
+					c.Customer.CustomerName,
+					c.OrderDate,
                     c.ShippedDate,
                     c.Total,
                     c.OrderStatus
@@ -117,7 +119,7 @@ namespace SaleManagementWinApp
                 Order = new Order()
                 {
                     OrderId = (int)row.Cells[0].Value,
-                    CustomerId = (int)row.Cells[1].Value,
+                    CustomerId = customerRepository.GetIdByName((string)row.Cells[1].Value),
                     OrderDate = (DateTime)row.Cells[2].Value,
                     ShippedDate = (DateTime)row.Cells[3].Value,
                     Total = (decimal)row.Cells[4].Value,

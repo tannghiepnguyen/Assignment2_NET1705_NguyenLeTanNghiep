@@ -31,7 +31,13 @@ namespace SaleManagementWinApp
 
         private void btnClose_Click(object sender, EventArgs e) => this.Close();
 
-        private void frmProduct_Load(object sender, EventArgs e)
+		private bool IsNumeric(string input)
+		{
+			double test;
+			return double.TryParse(input, out test);
+		}
+
+		private void frmProduct_Load(object sender, EventArgs e)
         {
             cbCategoryID.DataSource = categoryRepository.GetAllCategories().ToList();
             cbCategoryID.ValueMember = "CategoryID";
@@ -73,6 +79,18 @@ namespace SaleManagementWinApp
             {
                 MessageBox.Show("Morphology is empty", "Invalid input", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
             }
+            else if (!IsNumeric(txtUnitPrice.Text))
+            {
+				MessageBox.Show("Unit price is not a number", "Invalid input", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+			}
+			else if (decimal.Parse(txtUnitPrice.Text) <= 0)
+            {
+				MessageBox.Show("Unit price must be positive", "Invalid input", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+			}
+			else if (numUnitInStock.Value <= 0)
+            {
+				MessageBox.Show("Unit in stock must be positive", "Invalid input", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+			}
             else
             {
                 FlowerBouquet product = new FlowerBouquet()

@@ -18,6 +18,8 @@ namespace SaleManagementWinApp
         private IProductRepository productRepository;
         private IOrderRepository orderRepository;
         private IOrderDetailRepository orderDetailRepository;
+        private ISupplierRepository supplierRepository;
+        private ICategoryRepository categoryRepository;
 
         public Customer? Customer { get; set; }
         public bool isAdmin { get; set; }
@@ -26,6 +28,8 @@ namespace SaleManagementWinApp
             orderRepository = new OrderRepository();
             productRepository = new ProductRepository();
             orderDetailRepository = new OrderDetailRepository();
+            supplierRepository = new SupplierRepository();
+            categoryRepository = new CategoryRepository();
             InitializeComponent();
         }
 
@@ -34,13 +38,13 @@ namespace SaleManagementWinApp
             dgvProductList.DataSource = productRepository.GetAllProduct().Select(c => new
             {
                 c.FlowerBouquetId,
-                c.CategoryId,
+                c.Category.CategoryName,
                 c.FlowerBouquetName,
                 c.Description,
                 c.UnitPrice,
                 c.UnitsInStock,
                 c.FlowerBouquetStatus,
-                c.SupplierId,
+                c.Supplier.SupplierName,
                 c.Morphology
             }).ToList();
         }
@@ -71,13 +75,13 @@ namespace SaleManagementWinApp
                 Product = new FlowerBouquet()
                 {
                     FlowerBouquetId = (int)row.Cells[0].Value,
-                    CategoryId = (int)row.Cells[1].Value,
+                    CategoryId = categoryRepository.GetIdByName((string)row.Cells[1].Value),
                     FlowerBouquetName = (string)row.Cells[2].Value,
                     Description = (string)row.Cells[3].Value,
                     UnitPrice = (decimal)row.Cells[4].Value,
                     UnitsInStock = (int)row.Cells[5].Value,
                     FlowerBouquetStatus = (byte?)row.Cells[6].Value,
-                    SupplierId = (int?)(row.Cells[7].Value),
+                    SupplierId = supplierRepository.GetIdByName((string?)(row.Cells[7].Value)),
                     Morphology = (string?)row.Cells[8].Value,
                 }
             };

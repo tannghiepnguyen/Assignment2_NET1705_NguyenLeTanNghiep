@@ -12,6 +12,8 @@ namespace Repositories
     {
         public List<Category> GetAllCategories() => CategoryDAO.Instance.GetAllCategory();
 
+		public int GetIdByName(string name) => CategoryDAO.Instance.GetIdByName(name);
+
 		public string GetNameById(int id) => CategoryDAO.Instance.GetCategoryNameById(id);
 	}
 }

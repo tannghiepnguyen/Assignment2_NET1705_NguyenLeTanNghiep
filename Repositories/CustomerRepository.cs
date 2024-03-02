@@ -20,7 +20,11 @@ namespace Repositories
 
         public Customer? GetCustomerByEmailPassword(string email, string password) => CustomerDAO.Instance.GetCustomerByEmailPassword(email, password);
 
-        public void UpdateCustomer(Customer customer) => CustomerDAO.Instance.UpdateCustomer(customer);
+		public int GetIdByName(string name) => CustomerDAO.Instance.GetIdByName(name);
+
+		public string GetNameById(int id) => CustomerDAO.Instance.GetNameById(id);
+
+		public void UpdateCustomer(Customer customer) => CustomerDAO.Instance.UpdateCustomer(customer);
 
        
     }

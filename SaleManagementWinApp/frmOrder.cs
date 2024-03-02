@@ -15,10 +15,12 @@ namespace SaleManagementWinApp
     public partial class frmOrder : Form
     {
         private IOrderRepository orderRepository;
+        private ICustomerRepository customerRepository;
         public Order Order { get; set; }
         public frmOrder()
         {
             orderRepository = new OrderRepository();
+            customerRepository = new CustomerRepository();
             InitializeComponent();
         }
 
@@ -27,7 +29,7 @@ namespace SaleManagementWinApp
         private void frmOrder_Load(object sender, EventArgs e)
         {
             txtOrderID.Text = Order.OrderId.ToString();
-            txtCustomerID.Text = Order.CustomerId.ToString();
+            txtCustomerID.Text = customerRepository.GetNameById((int)Order.CustomerId);
             dtpOrderDate.Value = Order.OrderDate;
             dtpShippedDate.Value = (DateTime)Order.ShippedDate;
             txtTotal.Text = Order.Total.ToString();
@@ -45,7 +47,7 @@ namespace SaleManagementWinApp
                 Order order = new Order()
                 {
                     OrderId = int.Parse(txtOrderID.Text),
-                    CustomerId = int.Parse(txtCustomerID.Text),
+                    CustomerId = customerRepository.GetIdByName(txtCustomerID.Text),
                     OrderDate = dtpOrderDate.Value,
                     ShippedDate = dtpShippedDate.Value,
                     Total = decimal.Parse(txtTotal.Text),

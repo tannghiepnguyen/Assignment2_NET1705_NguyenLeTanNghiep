@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace DataAccessObjects
             {
                 using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
                 {
-                    List<Order> orderList = context.Orders.ToList();
+                    List<Order> orderList = context.Orders.Include(c => c.Customer).ToList();
                     return orderList;
                 }
             }
@@ -112,5 +113,7 @@ namespace DataAccessObjects
                 throw new Exception(ex.Message);
             }
         }
+
+        
     }
 }

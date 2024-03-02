@@ -11,5 +11,6 @@ namespace Repositories
     {
         List<Supplier> GetAllSupplier();
         string GetNameById(int? id);
+        int GetIdByName(string name);
     }
 }

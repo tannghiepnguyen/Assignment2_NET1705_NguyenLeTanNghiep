@@ -11,5 +11,6 @@ namespace Repositories
     {
         List<Category> GetAllCategories();
         string GetNameById(int id);
+        int GetIdByName(string name);
     }
 }

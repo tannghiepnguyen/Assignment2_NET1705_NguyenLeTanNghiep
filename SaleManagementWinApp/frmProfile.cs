@@ -36,8 +36,7 @@ namespace SaleManagementWinApp
             txtPassword.Text = Customer?.Password.ToString();
             txtConfirmPassword.Text = Customer?.Password.ToString();
         }
-
-        private void btnSave_Click(object sender, EventArgs e)
+		private void btnSave_Click(object sender, EventArgs e)
         {
             if (!txtPassword.Text.Equals(txtConfirmPassword.Text))
             {

@@ -61,5 +61,20 @@ namespace DataAccessObjects
 				throw new Exception(ex.Message);
 			}
 		}
+
+        public int GetIdByName(string name)
+        {
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
+				{
+					return context.Categories.FirstOrDefault(x => x.CategoryName.Equals(name)).CategoryId;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
     }
 }

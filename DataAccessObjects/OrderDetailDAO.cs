@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace DataAccessObjects
             {
                 using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
                 {
-                    List<OrderDetail> orderDetailList = context.OrderDetails.Where(c => c.OrderId == OrderID).ToList();
+                    List<OrderDetail> orderDetailList = context.OrderDetails.Include(c => c.FlowerBouquet).Where(c => c.OrderId == OrderID).ToList();
                     return orderDetailList;
                 }
             }

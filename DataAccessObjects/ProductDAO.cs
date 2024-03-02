@@ -1,9 +1,11 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataAccessObjects
 {
@@ -36,7 +38,7 @@ namespace DataAccessObjects
             {
                 using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
                 {
-                    productList = context.FlowerBouquets.ToList();
+                    productList = context.FlowerBouquets.Include(c => c.Category).Include(c => c.Supplier).ToList();
                     return productList;
                 }
             }
@@ -95,5 +97,37 @@ namespace DataAccessObjects
                 throw new Exception(ex.Message);
             }
         }
+
+        public int GetIdByName(string name)
+        {
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
+				{
+
+					return context.FlowerBouquets.FirstOrDefault(x => x.FlowerBouquetName.Equals(name)).FlowerBouquetId;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+
+        public string GetNameById(int id)
+        {
+			try
+			{
+				using (FUFlowerBouquetManagementV4Context? context = new FUFlowerBouquetManagementV4Context())
+				{
+
+					return context.FlowerBouquets.Find(id).FlowerBouquetName;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
     }
 }
